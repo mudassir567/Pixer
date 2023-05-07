@@ -1,38 +1,6 @@
-import axios from "axios";
-import { useState } from "react";
-// let apiSearchUrl=`https://api.pexels.com/v1/search?query=${search}`
-const tokenStr = "9ZGKKbUqIIE5ncE3QP62RyaWnil5BNTOaLAo6XyT7XlkNHexMJlOea1L";
-
+import Search from "./Search";
 
 function Navbar() {
-
-  const [search,setSearch]=useState("");
-
-  const handleInputChange=(e)=>{
-    setSearch(e.target.value)
-  }
-  const getSearch=async ()  =>{
-    try{
-    const res=await axios.get(`https://api.pexels.com/v1/search?query=${search}`,
-      {
-        headers: { Authorization: `${tokenStr}`},
-      });
-      console.log(res,"searchhhhh");
-    }
-
-    catch(err){
-      console.log(err)
-    }
-    
-
-  }
-
-  const handleButtonChnage=(e)=>{
-    getSearch()
-    setSearch("")
-  }
-
-
 
   return (
     <>
@@ -40,13 +8,7 @@ function Navbar() {
         <div className="logo flex items-center">
           <h4>PIXER</h4>
         </div>
-        <div className="flex space-x-4  ">
-          <input type="text" className="" placeholder="search..."  value={search} onChange={handleInputChange}/>
-          {console.log(search)}
-          <button onClick={handleButtonChnage}>Search</button>
-
-          
-        </div>
+        <Search />
         <div className=" nav-links flex   ">
           <div className="">
             <ul className="flex space-x-4  underline text-sky-500 text-lg">
