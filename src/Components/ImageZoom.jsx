@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { React, Fragment, useState } from "react";
+import { React, Fragment, useState, useContext } from "react";
 
 const ImageZoom = ({ imgUrl }) => {
   let [isOpen, setIsOpen] = useState(false);
@@ -14,8 +14,9 @@ const ImageZoom = ({ imgUrl }) => {
 
   return (
     <>
-      <div className="image_render">
+      <div className="image_render">  
         <img
+          loading="lazy"
           className="rounded-md cursor-pointer"
           src={imgUrl.src.portrait}
           onClick={openModal}
@@ -56,7 +57,10 @@ const ImageZoom = ({ imgUrl }) => {
                     Original Image{" "}
                   </Dialog.Title>
                   <div className="mt-2">
-                    <img src={imgUrl.src.original} alt="original_image" />
+                    <img
+                    loading="lazy" 
+                    src={imgUrl.src.original} 
+                    alt="original_image" />
                   </div>
 
                   <div className="mt-4">
@@ -73,7 +77,7 @@ const ImageZoom = ({ imgUrl }) => {
             </div>
           </div>
         </Dialog>
-      </Transition>
+      </Transition>      
     </>
   );
 };

@@ -14,17 +14,23 @@ display: flex;
 .Container{
 display: flex;
 }
-/* .Searchbar{
-  width: 900px;
-  height:30px;
-  border-color:red;
-} */
 
-/* .nav-links{
-
-
+.navbar {
+  text-align: center;
+  border-bottom: 2px solid grey;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px 10px;
+  display: flex;
 }
-.modal {
+
+
+
+
+
+
+
+/* .modal {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -36,13 +42,15 @@ display: flex;
   overflow: auto;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   text-align: center;
-} */
+} */ */
 
-.logo {
-max-height: 70px;
-max-width: 100px;;
+/* .logo {
+padding-right: 100px;
+align-items: flex-start;
+justify-self: start;
+
  
-}
+} */
 
 
 

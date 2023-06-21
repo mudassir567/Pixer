@@ -5,54 +5,31 @@ import MyContext from '../Context/MyContext';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Footer from '../Footer';
-const api_url = "https://api.pexels.com/v1/search?query=nature&per_page=30";
 
 
 const Api = () => {
 
-
-
   const [image, setImage] = useState([]);// for array of images.
   const [searchimage, setSearchimage] = useState("random");
   const [search,setSearch]=useState("");
-  const [search_val,setSearch_val]=useState("");
+  const [search_val,setSearch_val]=useState("cake");
   const [pagechange, setPagechange]=useState(1)
-
-
- 
-  
-  const get_image = async () => {
-    try {
-      const res = await axios.get(api_url, {
-        headers: { Authorization: `${import.meta.env.VITE_REACT_APP_ACESS_KEY}`},
-      });
-      let result = res.data.photos;
-      console.log(result,"testing the get_image array"); //ye baar baar print hora console me
-      setImage(result);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  useEffect(() => {
-        //Runs only on the first render
-        console.log("use_effect check")
-    get_image()
-  }, [])
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange=(e)=>{
     const val =e.target.value
     setSearch(val)
     setSearch_val(val)
-    
   }
-  
-  const getSearch=async ()  =>{
+  const getSearch=async (pagechange)  =>{
     try{
-    const search_res=await axios.get(`https://api.pexels.com/v1/search?query=${search_val}&per_page=8&page=${pagechange}`,
+     // setLoading(true)
+    const search_res=await axios.get(`${import.meta.env.VITE_API_LINK}=${search_val}&per_page=25&page=${pagechange}`,
       {
         headers: { Authorization: `${import.meta.env.VITE_REACT_APP_ACESS_KEY}`},
       });
-      let search_result=search_res.data.photos
+      const search_result=search_res.data.photos
+      setLoading(true)
       console.log(search_result,"dssds")
       setImage(search_result)
     }
@@ -60,7 +37,13 @@ const Api = () => {
       console.log(err)
     }
   }
-
+  useEffect(() => {
+    //Runs only on the first render
+    console.log("use_effect check")
+  getSearch()
+  }, [])
+  
+ 
   const handleButtonChnage=(e)=>{
     getSearch()
     setSearch("")
@@ -73,24 +56,22 @@ const Api = () => {
     if(e.key=== 'Enter'){
       console.log(e,"fff")
       handleButtonChnage()
-
     }
   }
 
 const  handlePrev_btn=()=>{
-    setPagechange(pagechange<0 - 1)
+  pagechange==0 ? setPagechange(0) : setPagechange(pagechange - 1)
+    //setPagechange(pagechange - 1)
     getSearch()
    
 }
 const handleNext_btn=()=>{
-    setPagechange(pagechange +1)
-    getSearch()
+  getSearch(pagechange)
+  setPagechange(pagechange + 1)  
 }
-
-
 return (
     
-<MyContext.Provider value={{image,pagechange,search,searchimage,handleInputChange,handleButtonChnage,handleEnterChange,handlePrev_btn,handleNext_btn}}>
+<MyContext.Provider value={{image,pagechange,search,searchimage,loading,handleInputChange,handleButtonChnage,handleEnterChange,handlePrev_btn,handleNext_btn}}>
 
 <Navbar />
 <Image  />
