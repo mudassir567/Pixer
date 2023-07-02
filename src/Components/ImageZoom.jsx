@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { React, Fragment, useState, useContext } from "react";
+import { React, Fragment, useState} from "react";
 
 const ImageZoom = ({ imgUrl }) => {
   let [isOpen, setIsOpen] = useState(false);

@@ -18,7 +18,7 @@ const Image = () => {
         {loading ? image.map((imgUrl, index) => {
           return <ImageZoom key={index} imgUrl={imgUrl} /> // zoom modal
          
-      }): <h1 className="text-white">loading...........<Spinner /></h1>}
+      }): <h1 className="text-white justify-center">loading...........<Spinner /></h1>}
       </div>
     </>
   );

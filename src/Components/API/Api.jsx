@@ -8,23 +8,24 @@ import Footer from '../Footer';
 
 
 const Api = () => {
-
+  
   const [image, setImage] = useState([]);// for array of images.
   const [searchimage, setSearchimage] = useState("random");
   const [search,setSearch]=useState("");
-  const [search_val,setSearch_val]=useState("cake");
+  const [search_val,setSearch_val]=useState("nature");
   const [pagechange, setPagechange]=useState(1)
   const [loading, setLoading] = useState(false);
-
+  
   const handleInputChange=(e)=>{
     const val =e.target.value
     setSearch(val)
     setSearch_val(val)
   }
+
   const getSearch=async (pagechange)  =>{
     try{
-     // setLoading(true)
-    const search_res=await axios.get(`${import.meta.env.VITE_API_LINK}=${search_val}&per_page=25&page=${pagechange}`,
+      setLoading(false)
+      const search_res=await axios.get(`${import.meta.env.VITE_API_LINK}=${search_val}&per_page=25&page=${pagechange}`,
       {
         headers: { Authorization: `${import.meta.env.VITE_REACT_APP_ACESS_KEY}`},
       });
@@ -38,12 +39,13 @@ const Api = () => {
     }
   }
   useEffect(() => {
-    //Runs only on the first render
+
     console.log("use_effect check")
-  getSearch()
-  }, [])
+    getSearch(pagechange)
   
- 
+  }, [pagechange])
+  
+  
   const handleButtonChnage=(e)=>{
     getSearch()
     setSearch("")
@@ -58,20 +60,23 @@ const Api = () => {
       handleButtonChnage()
     }
   }
-
-const  handlePrev_btn=()=>{
-  pagechange==0 ? setPagechange(0) : setPagechange(pagechange - 1)
-    //setPagechange(pagechange - 1)
-    getSearch()
-   
-}
-const handleNext_btn=()=>{
-  getSearch(pagechange)
-  setPagechange(pagechange + 1)  
-}
-return (
+  
+  const  handlePrev_btn=()=>{
+    if (pagechange > 0) {
+      const prevPage = pagechange - 1;
+      setPagechange(prevPage);
+      getSearch(prevPage);
+    }
     
-<MyContext.Provider value={{image,pagechange,search,searchimage,loading,handleInputChange,handleButtonChnage,handleEnterChange,handlePrev_btn,handleNext_btn}}>
+  }
+  const handleNext_btn=()=>{
+    const nextPage = pagechange + 1;
+    setPagechange(nextPage);
+    getSearch(nextPage);
+  }
+  return (
+    
+    <MyContext.Provider value={{image,pagechange,search,searchimage,loading,handleInputChange,handleButtonChnage,handleEnterChange,handlePrev_btn,handleNext_btn}}>
 
 <Navbar />
 <Image  />
